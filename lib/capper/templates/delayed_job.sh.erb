@@ -19,4 +19,8 @@ if [[ $# -ge 1 ]]; then
   MAX="--max-priority $1" && shift
 fi
 
-exec <%= ruby %> ./script/delayed_job $CMD --prefix <%= application %> --identifier $ID --pid-dir=<%= pid_path %> $MIN $MAX
+if [[ $# -ge 1 ]]; then
+  QUEUES="--queues $1" && shift
+fi
+
+exec <%= ruby %> ./script/delayed_job $CMD --prefix <%= application %> --identifier $ID --pid-dir=<%= pid_path %> $MIN $MAX $QUEUES
